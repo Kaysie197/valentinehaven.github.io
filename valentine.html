@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter For You ♡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f5e6e8;
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            animation: float 8s infinite;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        /* Screen 1: Letter */
+        #screen1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #e8c4a8;
+            border: 8px solid #c88577;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            image-rendering: pixelated;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 0;
+            border-left: 154px solid transparent;
+            border-right: 154px solid transparent;
+            border-top: 100px solid #d9a89a;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: #c84f4f;
+            text-shadow: 2px 2px 0px #963939;
+        }
+
+        .letter-text {
+            margin-top: 40px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Screen 2: Question */
+        #screen2 {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .window-box {
+            background: #e8a5a5;
+            border: 12px solid #c84f4f;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .window-header {
+            background: #f5b8c4;
+            padding: 15px;
+            margin: -40px -40px 30px -40px;
+            border-bottom: 4px solid #c84f4f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #c84f4f;
+            image-rendering: pixelated;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-btn {
+            width: 20px;
+            height: 20px;
+            background: #c84f4f;
+            border: 2px solid #963939;
+            cursor: default;
+        }
+
+        .heart-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .pixel-heart {
+            font-size: 48px;
+            color: #c84f4f;
+            text-shadow: 2px 2px 0px #963939;
+        }
+
+        .cat-container {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .cat-pixel {
+            font-size: 80px;
+            line-height: 1;
+        }
+
+        .question {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0 40px 0;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            height: 60px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            border: 4px solid #963939;
+            cursor: pointer;
+            transition: all 0.2s;
+            image-rendering: pixelated;
+        }
+
+        .btn-yes {
+            background: #90ee90;
+            color: #333;
+        }
+
+        .btn-yes:hover {
+            background: #7cdb7c;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background: #ffb3b3;
+            color: #333;
+            position: absolute;
+            transition: all 0.1s ease-out;
+        }
+
+        /* Screen 3: Success */
+        #screen3 {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .celebration {
+            background: #fff;
+            padding: 60px 40px;
+            border: 12px solid #c84f4f;
+            border-radius: 8px;
+            max-width: 600px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .cat-gif {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border: 6px solid #c84f4f;
+            border-radius: 8px;
+        }
+
+        .love-message {
+            font-size: 36px;
+            font-weight: bold;
+            color: #c84f4f;
+            margin-top: 30px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <script>
+        // Create floating hearts
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-bg';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 8 + 's';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            heart.style.color = `hsl(${Math.random() * 20 + 340}, 70%, 60%)`;
+            document.body.appendChild(heart);
+        }
+    </script>
+
+    <!-- Screen 1: Letter -->
+    <div id="screen1">
+        <div class="envelope" onclick="openLetter()">
+            <div class="envelope-flap"></div>
+            <div class="heart-seal">♥</div>
+        </div>
+        <div class="letter-text">♡ Letter For You ♡</div>
+    </div>
+
+    <!-- Screen 2: Question -->
+    <div id="screen2">
+        <div class="window-box">
+            <div class="window-header">
+                <div class="window-title">LOVE</div>
+                <div class="window-controls">
+                    <div class="window-btn"></div>
+                    <div class="window-btn"></div>
+                    <div class="window-btn"></div>
+                </div>
+            </div>
+            
+            <div class="heart-decoration">
+                <span class="pixel-heart">♥</span>
+                <span class="pixel-heart">♥</span>
+                <span class="pixel-heart">♥</span>
+            </div>
+
+            <div class="cat-container">
+                <div class="cat-pixel">
+                    🐱<br>
+                    <span style="font-size: 40px;">💌</span>
+                </div>
+            </div>
+
+            <div class="question">Will you be my Valentine?</div>
+
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-yes" onclick="clickYes()">YES</button>
+                <button class="btn btn-no" id="noBtn">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Success -->
+    <div id="screen3">
+        <div class="celebration">
+            <h1 style="font-size: 48px; color: #c84f4f; margin-bottom: 20px;">🎉 YAY! 🎉</h1>
+            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Happy Cat" class="cat-gif">
+            <div class="love-message">WHOOOOOOOO I LOVE YOU!</div>
+        </div>
+    </div>
+
+    <script>
+        let noAttempts = 0;
+
+        function openLetter() {
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'flex';
+        }
+
+        function clickYes() {
+            document.getElementById('screen2').style.display = 'none';
+            document.getElementById('screen3').style.display = 'flex';
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        // Make NO button jump away on hover
+        noBtn.addEventListener('mouseenter', function() {
+            const containerRect = buttonContainer.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate available space
+            const maxX = window.innerWidth - btnRect.width - 50;
+            const maxY = window.innerHeight - btnRect.height - 50;
+            
+            // Generate random position
+            let newX = Math.random() * (maxX - 100) + 50;
+            let newY = Math.random() * (maxY - 100) + 50;
+            
+            // Make sure it's far from current position
+            const currentX = btnRect.left;
+            const currentY = btnRect.top;
+            
+            while (Math.abs(newX - currentX) < 200 || Math.abs(newY - currentY) < 200) {
+                newX = Math.random() * (maxX - 100) + 50;
+                newY = Math.random() * (maxY - 100) + 50;
+            }
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            noAttempts++;
+            
+            // Make the button smaller and more frantic as attempts increase
+            if (noAttempts > 3) {
+                noBtn.style.transform = `scale(${Math.max(0.5, 1 - noAttempts * 0.05)}) rotate(${Math.random() * 360}deg)`;
+            }
+        });
+
+        // Optional: Click handler for NO button (just in case they manage to click it)
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("Nice try! But you can't say no to love! 💕");
+        });
+    </script>
+</body>
+</html>
