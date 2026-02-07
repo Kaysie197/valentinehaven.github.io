@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter For You ♡</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        body {
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            background: #ffd1dc;
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        
+        .heart-bg {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            animation: float 8s infinite;
+            opacity: 0.7;
+            pointer-events: none;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        
+        #screen1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .envelope {
+            width: 280px;
+            height: 180px;
+            background: #d4a373;
+            border: 6px solid #8b6f47;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 
+                6px 0 0 #8b6f47,
+                0 6px 0 #8b6f47,
+                6px 6px 0 #8b6f47,
+                12px 12px 0 rgba(0,0,0,0.3);
+        }
+
+        .envelope:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                8px 2px 0 #8b6f47,
+                2px 8px 0 #8b6f47,
+                8px 8px 0 #8b6f47,
+                14px 14px 0 rgba(0,0,0,0.3);
+        }
+
+        .envelope:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                4px 0 0 #8b6f47,
+                0 4px 0 #8b6f47,
+                4px 4px 0 #8b6f47,
+                8px 8px 0 rgba(0,0,0,0.3);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 143px solid transparent;
+            border-right: 143px solid transparent;
+            border-top: 90px solid #c48b5c;
+            border-bottom: 3px solid #8b6f47;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: #ff0066;
+            filter: drop-shadow(3px 3px 0px #cc0052);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .letter-text {
+            margin-top: 50px;
+            font-size: 20px;
+            color: #ff0066;
+            text-align: center;
+            text-shadow: 
+                3px 3px 0px #cc0052,
+                -1px -1px 0px #fff;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49%, 100% { opacity: 1; }
+            50%, 99% { opacity: 0.7; }
+        }
+
+        
+        #screen2 {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .window-box {
+            background: #ffb3d9;
+            border: 8px solid #ff0066;
+            padding: 0;
+            max-width: 640px;
+            width: 90%;
+            box-shadow: 
+                8px 8px 0 #cc0052,
+                16px 16px 0 rgba(0,0,0,0.3);
+        }
+
+        .window-header {
+            background: #ff0066;
+            padding: 16px;
+            border-bottom: 4px solid #cc0052;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-title {
+            font-size: 16px;
+            color: #fff;
+            text-shadow: 2px 2px 0px #cc0052;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-btn {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border: 2px solid #cc0052;
+            cursor: default;
+        }
+
+        .window-btn:nth-child(1) { background: #ffff00; }
+        .window-btn:nth-child(2) { background: #00ff00; }
+        .window-btn:nth-child(3) { background: #ff6666; }
+
+        .heart-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 24px 0;
+            padding: 0 40px;
+        }
+
+        .pixel-heart {
+            font-size: 32px;
+            color: #ff0066;
+            filter: drop-shadow(2px 2px 0px #cc0052);
+            animation: bounce 1s infinite;
+        }
+
+        .pixel-heart:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .pixel-heart:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .cat-container {
+            background: #ff99cc;
+            border: 4px solid #ff0066;
+            padding: 24px;
+            margin: 0 40px 24px 40px;
+            text-align: center;
+            box-shadow: inset 0 0 0 2px #ffb3d9;
+        }
+
+        .cat-pixel {
+            font-size: 64px;
+            line-height: 1.2;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.2));
+        }
+
+        .question {
+            font-size: 16px;
+            text-align: center;
+            margin: 24px 40px;
+            color: #fff;
+            text-shadow: 
+                3px 3px 0px #cc0052,
+                -1px -1px 0px #ff0066;
+            line-height: 1.8;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin: 24px 40px 40px 40px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 14px;
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            border: 4px solid #000;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: rgba(255,255,255,0.3);
+            pointer-events: none;
+        }
+
+        .btn-yes {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 
+                4px 4px 0 #009900,
+                8px 8px 0 rgba(0,0,0,0.3);
+        }
+
+        .btn-yes:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                6px 6px 0 #009900,
+                10px 10px 0 rgba(0,0,0,0.3);
+        }
+
+        .btn-yes:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                2px 2px 0 #009900,
+                4px 4px 0 rgba(0,0,0,0.3);
+        }
+
+        .btn-no {
+            background: #ff6666;
+            color: #000;
+            box-shadow: 
+                4px 4px 0 #cc0000,
+                8px 8px 0 rgba(0,0,0,0.3);
+            transition: all 0.05s ease-out;
+            touch-action: none;
+        }
+
+       
+        #screen3 {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .celebration {
+            background: #ffb3d9;
+            padding: 40px;
+            border: 8px solid #ff0066;
+            max-width: 640px;
+            box-shadow: 
+                8px 8px 0 #cc0052,
+                16px 16px 0 rgba(0,0,0,0.3);
+        }
+
+        .celebration h1 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 24px;
+            text-shadow: 
+                3px 3px 0px #cc0052,
+                -1px -1px 0px #ff0066;
+            animation: flash 0.5s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .cat-gif {
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+            border: 6px solid #ff0066;
+            box-shadow: 
+                6px 6px 0 #cc0052,
+                12px 12px 0 rgba(0,0,0,0.2);
+            background: #fff;
+        }
+
+        .love-message {
+            font-size: 18px;
+            color: #fff;
+            margin-top: 24px;
+            padding: 16px;
+            background: #ff0066;
+            border: 4px solid #cc0052;
+            text-shadow: 2px 2px 0px #cc0052;
+            animation: pulse 1s infinite;
+            line-height: 1.8;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        
+        for (let i = 0; i < 25; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-bg';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 8 + 's';
+            heart.style.color = ['#ff0066', '#ff3385', '#ff6699', '#cc0052'][Math.floor(Math.random() * 4)];
+            document.body.appendChild(heart);
+        }
+    </script>
+
+   
+    <div id="screen1">
+        <div class="envelope" onclick="openLetter()">
+            <div class="envelope-flap"></div>
+            <div class="heart-seal">♥</div>
+        </div>
+        <div class="letter-text">♡ Letter For You ♡</div>
+    </div>
+
+    
+    <div id="screen2">
+        <div class="window-box">
+            <div class="window-header">
+                <div class="window-title">LOVE</div>
+                <div class="window-controls">
+                    <div class="window-btn"></div>
+                    <div class="window-btn"></div>
+                    <div class="window-btn"></div>
+                </div>
+            </div>
+            
+            <div class="heart-decoration">
+                <span class="pixel-heart">♥</span>
+                <span class="pixel-heart">♥</span>
+                <span class="pixel-heart">♥</span>
+            </div>
+
+            <div class="cat-container">
+                <div class="cat-pixel">
+                    <div style="display:flex;justify-content:center;width:100%"><div class="tenor-gif-embed" data-postid="8754256510208746708" data-share-method="host" data-aspect-ratio="0.948276" data-width="60%"><a href="https://tenor.com/view/begging-cat-cat-cute-sweet-gif-8754256510208746708">Begging Cat Cat Sticker</a> from <a href="https://tenor.com/search/begging+cat-stickers">Begging Cat Stickers</a></div></div><script async src="https://tenor.com/embed.js"></script>
+                    <span style="font-size: 40px;">💌</span>
+                </div>
+            </div>
+
+            <div class="question">Haven, will you be my Valentine?</div>
+
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-yes" onclick="clickYes()">YES</button>
+                <button class="btn btn-no" id="noBtn">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen3">
+        <div class="celebration">
+            <h1 style="font-size: 48px; color: #c84f4f; margin-bottom: 20px;">🎉 YAY! 🎉</h1>
+            <div style="display:flex;justify-content:center;width:100%"><div class="tenor-gif-embed" data-postid="21483828" data-share-method="host" data-aspect-ratio="0.928125" data-width="60%"><a href="https://tenor.com/view/cutest-white-cat-cats-cat-gif-21483828">Cutest White Cat Sticker</a> from <a href="https://tenor.com/search/cutest-stickers">Cutest Stickers</a></div></div><script async src="https://tenor.com/embed.js"></script>
+            <div class="love-message">YES! SHE SAID YES!! I LOVE YOU!</div>
+        </div>
+    </div>
+
+    <script>
+        let noAttempts = 0;
+
+        function openLetter() {
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'flex';
+        }
+
+        function clickYes() {
+            document.getElementById('screen2').style.display = 'none';
+            document.getElementById('screen3').style.display = 'flex';
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const buttonContainer = document.getElementById('buttonContainer');
+        let hasJumped = false;
+
+        function moveNoButton() {
+            
+            if (!hasJumped) {
+                noBtn.style.position = 'fixed';
+                noBtn.style.zIndex = '1000';
+                hasJumped = true;
+            }
+            
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            
+            const maxX = window.innerWidth - btnRect.width - 20;
+            const maxY = window.innerHeight - btnRect.height - 20;
+            
+            
+            let newX = Math.random() * (maxX - 60) + 30;
+            let newY = Math.random() * (maxY - 60) + 30;
+            
+            
+            const currentX = btnRect.left;
+            const currentY = btnRect.top;
+            
+            
+            const minDistance = window.innerWidth < 768 ? 150 : 200;
+            
+            let attempts = 0;
+            while ((Math.abs(newX - currentX) < minDistance || Math.abs(newY - currentY) < minDistance) && attempts < 20) {
+                newX = Math.random() * (maxX - 60) + 30;
+                newY = Math.random() * (maxY - 60) + 30;
+                attempts++;
+            }
+            
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            noAttempts++;
+            
+            
+            if (noAttempts > 3) {
+                noBtn.style.transform = `scale(${Math.max(0.5, 1 - noAttempts * 0.05)}) rotate(${Math.random() * 360}deg)`;
+            }
+        }
+
+        
+        noBtn.addEventListener('mouseenter', moveNoButton);
+
+        
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault(); 
+            moveNoButton();
+        }, { passive: false });
+
+        
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (noAttempts > 5) {
+                alert("bawal!!! You can't say no, my love! 💕");
+            }
+            return false;
+        });
+    </script>
+</body>
+</html>
