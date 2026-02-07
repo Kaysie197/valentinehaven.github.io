@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letter For You ♡</title>
+    <title>Jagiya ♡</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -456,7 +456,6 @@
         let hasJumped = false;
 
         function moveNoButton() {
-            // First time jumping, switch to fixed positioning
             if (!hasJumped) {
                 noBtn.style.position = 'fixed';
                 noBtn.style.zIndex = '1000';
@@ -465,19 +464,18 @@
             
             const btnRect = noBtn.getBoundingClientRect();
             
-            // Calculate available space
             const maxX = window.innerWidth - btnRect.width - 20;
             const maxY = window.innerHeight - btnRect.height - 20;
             
-            // Generate random position
+    
             let newX = Math.random() * (maxX - 60) + 30;
             let newY = Math.random() * (maxY - 60) + 30;
             
-            // Make sure it's far from current position
+            
             const currentX = btnRect.left;
             const currentY = btnRect.top;
             
-            // For mobile, use a smaller distance requirement
+            
             const minDistance = window.innerWidth < 768 ? 150 : 200;
             
             let attempts = 0;
@@ -492,26 +490,25 @@
             
             noAttempts++;
             
-            // Make the button smaller and rotate as attempts increase
+            
             if (noAttempts > 3) {
                 noBtn.style.transform = `scale(${Math.max(0.5, 1 - noAttempts * 0.05)}) rotate(${Math.random() * 360}deg)`;
             }
         }
 
-        // Desktop: mouseenter event
+       
         noBtn.addEventListener('mouseenter', moveNoButton);
 
-        // Mobile: touchstart event (fires before click)
         noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevent the click event from firing
+            e.preventDefault(); 
             moveNoButton();
         }, { passive: false });
 
-        // Prevent default click behavior and stop propagation
+       
         noBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            // Only show alert if they somehow managed to click after many attempts
+            
             if (noAttempts > 5) {
                 alert("bawal!!! You can't say no, my love! 💕");
             }
